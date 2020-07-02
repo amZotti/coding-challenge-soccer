@@ -1,0 +1,22 @@
+{
+  "name": "coding-challenge-soccer",
+  "version": "1.0.0",
+  "description": "We want you to create a command-line application that reads a listing of game results for a soccer league as a stream and returns the top teams at the end of each matchday.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amZotti/coding-challenge-soccer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amZotti/coding-challenge-soccer/issues"
+  },
+  "homepage": "https://github.com/amZotti/coding-challenge-soccer#readme"
+}
