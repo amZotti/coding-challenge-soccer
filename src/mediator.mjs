@@ -1,7 +1,9 @@
 import MaxHeap from "./maxHeap.mjs";
 import parseFile from "./parser.mjs";
 
-const p = parseFile("./test");
+const filePath = process.argv[2];
+
+const p = parseFile(filePath);
 
 const TEXT_WALL = Array(60).fill("=").join("");
 
@@ -26,5 +28,4 @@ p.then(matches => {
         printResult(heap, i);
     });     
 });
-
 
