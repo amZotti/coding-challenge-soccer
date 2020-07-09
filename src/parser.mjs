@@ -3,9 +3,25 @@ import fs from "fs";
 const SCORE_REGEX_MATCHER = /[0-9]+/g;
 const NAME_REGEX_MATCHER = /[a-zA-Z ]+/g;
 
+// Convert from buffer to array of strings
+function bufferToStrings(buffer) {
+    let strings = [];
+
+    // Normalize all the league data
+    // This loop handles malformed input whereby there are extra newline characters
+    // newline is our delimiter between matches, so we want to strip out any newlines
+    // Which do not delimit actual relevant data
+    buffer.toString().split('\n').forEach(str => {
+        if (str !== "") {
+            strings.push(str); 
+        }
+    }); 
+    return strings;
+}
+
 function sanitizeInput(buffer) {
-    const uncleanInput = buffer.toString().split('\n'); // Convert from buffer to array of strings
-    return uncleanInput.join(",").split(",").map(txt => txt.trim());
+    let uncleanInput = bufferToStrings(buffer);
+    return uncleanInput.join(",").split(",").map(txt => txt.trim()); // Normalize the match data on the per line basis
 }
 
 function extractName(str) {
@@ -30,6 +46,15 @@ function extractScore(str) {
 }
 
 /*
+    Value to extract: Points per game for every team
+    Return value: Array()
+*/
+
+
+
+
+
+/*
     Our error policy for input is as follows: We group according to occurence - the segment of a given team does not matter, only the occurence.
     This means if a user inputs the teams out of order, we will not throw any errors.
     Errors will only be thrown if lines of input are malformed or if teams/matches are imbalanced.
@@ -39,10 +64,7 @@ function groupByMatches(input) {
    const matches = [];
 
    input.forEach(value => {
-        if (value === "") {
-            return;
-        }
-
+            // Need to redo logic to translate score to points per match
         const teamName = extractName(value);
         const score = extractScore(value);
 
@@ -79,6 +101,7 @@ function parseFile(filePath) {
             }
 
             const cleanInput = sanitizeInput(buffer);
+            console.log("cleanInput: ", cleanInput);
 
     
             const matches = groupByMatches(cleanInput);
