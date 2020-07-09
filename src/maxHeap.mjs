@@ -23,7 +23,6 @@ class MaxHeap {
     }
 
     extractMax() {
-        //debugger;
         const max = this.state[0];
         this.state[0] = this.state[this.state.length - 1]; // Overwrite current max with leaf node
 
