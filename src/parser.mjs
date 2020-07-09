@@ -15,7 +15,7 @@ function extractName(str) {
         console.error("Unparsable team name: ", str);
         return "";
     }
-    return result[0];
+    return result[0].trim();
 }
 
 function extractScore(str) {
