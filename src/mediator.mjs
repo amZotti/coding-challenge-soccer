@@ -4,7 +4,6 @@ import parseFile from "./parser.mjs";
 const p = parseFile("./test");
 
 const TEXT_WALL = Array(60).fill("=").join("");
-//Capitola Seahorses, 3 pts
 
 function printLine({ name, score }) {
     console.log(`${name}, ${score} pts`);

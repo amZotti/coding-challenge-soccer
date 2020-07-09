@@ -1,5 +1,10 @@
 import assert from "assert";
 import MaxHeap from "../src/maxHeap.mjs";
+import parseFile from "../src/parser.mjs";
+
+
+const APP_ROOT = process.env.PWD; // Must be ran from app root in package.json
+
 
 describe("Heap", function () {
     it("should oragnize input by score criteria primarily", function () {
@@ -43,5 +48,17 @@ describe("Heap", function () {
         assert.deepEqual(heap.extractMax(), b);
         assert.deepEqual(heap.extractMax(), a);
 
+    });
+});
+
+describe("parser", function() {
+    it("should parse a text file into an array of match objects", function() {
+        const p = parseFile(`${APP_ROOT}/tests/sample-input.txt`);
+        p.then(matches => {
+            assert.equal(matches.length, 4);
+            assert.equal(matches[0].length, 6);
+            assert.equal(typeof matches[0][0].score, "number");
+            assert.equal(typeof matches[0][0].name, "string");
+        });
     });
 });
