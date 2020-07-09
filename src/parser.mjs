@@ -31,6 +31,8 @@ function extractScore(str) {
 
 /*
     Our error policy for input is as follows: We group according to occurence - the segment of a given team does not matter, only the occurence.
+    This means if a user inputs the teams out of order, we will not throw any errors.
+    Errors will only be thrown if lines of input are malformed or if teams/matches are imbalanced.
 */
 function groupByMatches(input) {
    const gamesPlayedSoFar = {};

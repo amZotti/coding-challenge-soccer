@@ -1,14 +1,7 @@
-// sift_up
-// sift_down
-// insert
-// extractMax
-// peek
-
 class MaxHeap {
     constructor() {
         this.state = [];
     }
-
 
 
     /*  Params:
