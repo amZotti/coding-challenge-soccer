@@ -3,6 +3,9 @@ import fs from "fs";
 const SCORE_REGEX_MATCHER = /[0-9]+/g;
 const NAME_REGEX_MATCHER = /[a-zA-Z ]+/g;
 
+const WIN_POINTS = 3;
+const TIE_POINTS = 1;
+
 // Convert from buffer to array of strings
 function bufferToStrings(buffer) {
     let strings = [];
@@ -72,12 +75,12 @@ function processMatches(scores) {
         }
 
         if (score1 < score2) {
-            accumulator[team2] += 3;
+            accumulator[team2] += WIN_POINTS;
         } else if (score1 > score2) {
-            accumulator[team1] += 3;
+            accumulator[team1] += WIN_POINTS;
         } else {
-            accumulator[team1] += 1;
-            accumulator[team2] += 1;
+            accumulator[team1] += TIE_POINTS;
+            accumulator[team2] += TIE_POINTS;
         }
 
         matchResult[team1] = accumulator[team1];
