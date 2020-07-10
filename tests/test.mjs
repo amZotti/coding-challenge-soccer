@@ -56,9 +56,7 @@ describe("parser", function() {
         const p = parseFile(`${APP_ROOT}/tests/sample-input.txt`);
         p.then(matches => {
             assert.equal(matches.length, 4);
-            assert.equal(matches[0].length, 6);
-            assert.equal(typeof matches[0][0].score, "number");
-            assert.equal(typeof matches[0][0].name, "string");
+            assert.equal(matches[3]["Aptos FC"], 9);
         });
     });
 });
