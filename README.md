@@ -24,10 +24,7 @@ Run the following commands from project root:
 1. `npm install`
 2. `npm test`
 
-
-#Design Decisions
-
-### Heap
+### Design Decision: Heap
 
 Why implement a custom heap to do sorting? Afterall, the native Javascript `Array.prototype.sort` function performs a quicksort internally which provides O(n logn) time complexity - we could 
 use similar comparator logic that our Heap uses with `Array.prototype.sort` to be able to easily sort by both points and names - so why take on the extra burden of using a heap?
