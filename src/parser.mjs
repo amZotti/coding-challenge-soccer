@@ -45,53 +45,48 @@ function extractScore(str) {
     return Number(result[0]);
 }
 
-/*
-    Value to extract: Points per game for every team
-    Return value: Array()
-*/
 
+function processMatches(scores) {
+    let matchResult = {};
+    const leagueResults = [];
+    const accumulator = {};
 
+    for (let i = 0;i < scores.length;i += 2) {
+        let team1 = extractName(scores[i]);
+        let team2 = extractName(scores[i+1]);
 
+        let score1 = extractScore(scores[i]);
+        let score2 = extractScore(scores[i+1]);
 
-
-
-
-/*
-    Our error policy for input is as follows: We group according to occurence - the segment of a given team does not matter, only the occurence.
-    This means if a user inputs the teams out of order, we will not throw any errors.
-    Errors will only be thrown if lines of input are malformed or if teams/matches are imbalanced.
-*/
-function groupByMatches(input) {
-   const gamesPlayedSoFar = {};
-   const matches = [];
-
-   input.forEach(value => {
-            // Need to redo logic to translate score to points per match
-        const teamName = extractName(value);
-        const score = extractScore(value);
-
-        let currentGame = gamesPlayedSoFar[teamName];
-
-        if (currentGame === undefined) {
-            currentGame = gamesPlayedSoFar[teamName] = 0;
+        if (matchResult[team1] !== undefined || matchResult[team2] !== undefined) { // All previous games of last match have been played - store previous result and create new result object
+            leagueResults.push(matchResult);
+            matchResult = {};
         }
 
-        gamesPlayedSoFar[teamName]++;
-
-    
-        let currentMatch = matches[currentGame];
-
-        if (!currentMatch) {
-            currentMatch = matches[currentGame] = [];
+        if (!accumulator[team1]) {
+            accumulator[team1] = 0;
         }
 
-        currentMatch.push({ name: teamName, score });
-    }); 
+        if (!accumulator[team2]) {
+            accumulator[team2] = 0;
+        }
 
-    return matches;
+        if (score1 < score2) {
+            accumulator[team2] += 3;
+        } else if (score1 > score2) {
+            accumulator[team1] += 3;
+        } else {
+            accumulator[team1] += 1;
+            accumulator[team2] += 1;
+        }
 
+        matchResult[team1] = accumulator[team1];
+        matchResult[team2] = accumulator[team2];
+    }
+    leagueResults.push(matchResult);
+
+    return leagueResults;
 }
-
 
 function parseFile(filePath) {
     return new Promise((resolution, rejection) => {
@@ -106,10 +101,10 @@ function parseFile(filePath) {
 
             
     
-            const matches = groupByMatches(cleanInput);
+            const matches = processMatches(cleanInput);
 
             for (let i = 0;i < matches.length-1;i++) {
-                if (matches[i].length !== matches[i+1].length) {
+                if (Object.keys(matches[i]).length !== Object.keys(matches[i+1]).length) {
                     const message = "Team imbalance - some teams did not compete";
                     console.error(message);
                     rejection(message);

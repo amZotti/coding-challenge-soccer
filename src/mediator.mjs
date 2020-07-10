@@ -24,7 +24,14 @@ function printResult(heap, matchNumber) {
 p.then(matches => {
     matches.forEach((match, i) => {
         const heap = new MaxHeap();
-        match.forEach(game => heap.insert(game)); // populate heap with matches
+        for (let key in match) {
+            if (match.hasOwnProperty(key)) {
+                heap.insert({
+                    name: key,
+                    score: match[key],
+                });
+            }
+        }
         printResult(heap, i);
     });     
 });
